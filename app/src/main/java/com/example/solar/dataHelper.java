@@ -10,7 +10,7 @@ import android.util.Log;
 public class dataHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "solar_db";
-    private static final int DATABASE_VERSION = 4; // Incremented version
+    private static final int DATABASE_VERSION = 4;
     private static final String TABLE_NAME = "solar";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_BRAND = "brand";

@@ -84,7 +84,13 @@ public class MainActivity extends AppCompatActivity {
     private void validateFields() {
         String username = user.getText().toString().trim();
         String password = pass.getText().toString().trim();
-        submit.setEnabled(!username.isEmpty() && !password.isEmpty());
+        submit.setEnabled(!username.isEmpty() && !password.isEmpty()&&  isValid(password));
+    }
+    private boolean isValid(String password) {
+        if(password.length()<8) return false;
+        else if(!password.matches(".*[a-zA-Z].*")) return false;
+        else if(!password.matches(".*[0-9].*")) return false;
+        else return password.matches(".*[!@#$%^&*()-_+=<>?/{}~].*");
     }
 
     private void initializeSharedPreferences() {

@@ -47,36 +47,50 @@ public class calc extends AppCompatActivity {
             return;
         }
 
-        double current = Double.parseDouble(currentStr);
-        double voltage = Double.parseDouble(voltageStr);
-        double panelArea = Double.parseDouble(panelAreaStr);
-        double irradiance = Double.parseDouble(irradianceStr);
+        try {
+            double current = Double.parseDouble(currentStr);
+            double voltage = Double.parseDouble(voltageStr);
+            double panelArea = Double.parseDouble(panelAreaStr);
+            double irradiance = Double.parseDouble(irradianceStr);
 
-        double outputPower = current * voltage; // Output Power in watts
-        double inputPower = irradiance * panelArea; // Input Power in watts
-        double calculatedEfficiency = (outputPower / inputPower) * 100; // Efficiency in percentage
+            if(current < 0 || voltage < 0 || panelArea < 0 || irradiance <= 0) {
+                Toast.makeText(this, "Invalid input! All values must be positive.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        String resultMessage = "Calculated Efficiency: " + String.format("%.2f", calculatedEfficiency) + "%";
-        resultText.setText(resultMessage);
-        resultText.setVisibility(TextView.VISIBLE);
-        boolean flag = dataHelper.insertData(providerName, current, voltage, panelArea, irradiance, calculatedEfficiency);
-        if (!flag) {
-            Toast.makeText(this, "Data insertion failed!", Toast.LENGTH_SHORT).show();
-        }
+            double calculatedEfficiency = calculateEfficiencyLogic(current, voltage, panelArea, irradiance);
+            if(calculatedEfficiency > 100) {
+                Toast.makeText(this, "Calculated efficiency exceeds 100%! Please check your inputs.", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-        if (calculatedEfficiency < providerEfficiency) {
-            showMaintenanceAlert();
-        } else {
-            Toast.makeText(this, "Your solar panel is performing well!", Toast.LENGTH_SHORT).show();
+            String resultMessage = "Calculated Efficiency: "+String.format("%.2f",calculatedEfficiency)+"%";
+            resultText.setText(resultMessage);
+            resultText.setVisibility(TextView.VISIBLE);
+            boolean flag = dataHelper.insertData(providerName, current, voltage, panelArea, irradiance, calculatedEfficiency);
+            if(!flag) {
+                Toast.makeText(this, "Data insertion failed!", Toast.LENGTH_SHORT).show();
+            }
+            if(calculatedEfficiency < providerEfficiency) showMaintenanceAlert(calculatedEfficiency);
+            else Toast.makeText(this, "Your solar panel is performing well!", Toast.LENGTH_SHORT).show();
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid input! Please enter valid numbers.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void showMaintenanceAlert() {
+    private double calculateEfficiencyLogic(double current, double voltage, double panelArea, double irradiance) {
+        double outputPower = current * voltage;
+        double inputPower = irradiance * panelArea;
+        return (outputPower / inputPower) * 100;
+    }
+
+    private void showMaintenanceAlert(double efficiency) {
         new AlertDialog.Builder(this)
                 .setTitle("Maintenance Required")
-                .setMessage("The calculated efficiency is below the recommended level for " + providerName + ".\nPlease consider maintenance!")
+                .setMessage("The calculated efficiency (" + String.format("%.2f", efficiency) + "%) is below the recommended level for " + providerName + ".\nPlease consider maintenance!")
                 .setPositiveButton("OK", (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
     }
 }
+
