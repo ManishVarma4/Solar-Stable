@@ -47,8 +47,9 @@
         app:layout_constraintTop_toBottomOf="@+id/text1" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="319dp"
-        android:layout_height="258dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
         android:background="#60D0D5"
         app:cardBackgroundColor="#BFEEEF"
@@ -64,7 +65,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
@@ -84,9 +85,30 @@
                 android:backgroundTint="#000000"
                 android:drawableLeft="@drawable/baseline_perm_identity_24"
                 android:ems="10"
-                android:hint="Username"
-                android:inputType="textEmailAddress"
+                android:hint="Name"
+                android:inputType="text"
                 android:shadowColor="#1C1B1B" />
+
+            <EditText
+                android:id="@+id/phone_number"
+                android:layout_width="258dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                android:backgroundTint="#000000"
+                android:drawableLeft="@drawable/baseline_local_phone_24"
+                android:ems="10"
+                android:hint="Phone"
+                android:inputType="phone"
+                android:shadowColor="#1C1B1B" />
+
+            <Button
+                android:id="@+id/otp"
+                android:layout_width="161dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="#29A9DC"
+                android:text="Send OTP"
+                android:textSize="18dp" />
 
             <EditText
                 android:id="@+id/pass"
@@ -95,21 +117,26 @@
                 android:layout_gravity="center"
                 android:drawableLeft="@drawable/baseline_password_24"
                 android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword" />
+                android:hint="OTP"
+                android:inputType="number" />
 
-            <Button
-                android:id="@+id/login"
-                android:layout_width="141dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:backgroundTint="#454444"
-                android:gravity="center"
-                android:shadowRadius="30"
-                android:text="LOGIN"
-                android:textColor="@color/white"
-                android:textSize="18dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="141dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="#33B4DC"
+        android:gravity="center"
+        android:shadowRadius="30"
+        android:text="LOGIN"
+        android:textColor="@color/white"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
