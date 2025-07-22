@@ -10,6 +10,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Home extends AppCompatActivity {
 
     private static final String SHARED_PREFS = "SolarPrefs";
@@ -43,7 +48,9 @@ public class Home extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-    }
+//        Map<String,String> data= new HashMap<>();
+//        FirebaseFirestore.getInstance().collection("test").add(data);
+   }
     private void showUsername() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         String username = sharedPreferences.getString(USERNAME_KEY, null);
@@ -71,8 +78,8 @@ public class Home extends AppCompatActivity {
     }
     private void openCalculationPage(String provider, double efficiency) {
         Intent intent = new Intent(Home.this, calc.class);
-        intent.putExtra(PROVIDER_KEY, provider);      // Pass the provider's name
-        intent.putExtra(EFFICIENCY_KEY, efficiency);  // Pass the provider's efficiency
+        intent.putExtra(PROVIDER_KEY, provider);
+        intent.putExtra(EFFICIENCY_KEY, efficiency);
         startActivity(intent);
     }
 }

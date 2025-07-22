@@ -27,7 +27,6 @@ public class dataHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + " ("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_BRAND + " TEXT, "
                 + COLUMN_CURR + " REAL, "
                 + COLUMN_VOLT + " REAL, "
@@ -39,13 +38,6 @@ public class dataHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 4) {
-            try {
-                db.execSQL("ALTER TABLE " + TABLE_NAME + " ADD COLUMN " + COLUMN_EFF + " REAL DEFAULT 0");
-            } catch (Exception e) {
-                Log.e("Database", "Error upgrading DB: " + e.getMessage());
-            }
-        }
     }
 
     public boolean insertData(String brand, double curr, double volt, double area, double irr, double eff) {
